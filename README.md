@@ -1,6 +1,12 @@
 # node-global-identity
 
-Global identity library for node.js.
+Global identity library for node.js. It works only on ES6.
+
+# Instalation
+
+```bash
+npm install node-global-identity
+```
 
 # Usage
 
