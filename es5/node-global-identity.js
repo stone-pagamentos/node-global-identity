@@ -35,6 +35,10 @@ function renameKeys(data) {
   return result;
 }
 
+function handleError(json, reject) {
+  return reject({ message: json.OperationReport[0].Message });
+}
+
 function response(res, resolve, reject) {
   var json = JSON.parse(res);
 
@@ -43,7 +47,7 @@ function response(res, resolve, reject) {
     return resolve(renameKeys(json));
   }
 
-  return reject({ message: json.OperationReport[0].Message });
+  return handleError(json, reject);
 }
 
 var _default = (function () {
@@ -100,6 +104,8 @@ var _default = (function () {
           body: JSON.stringify(body)
         }).then(function (res) {
           return response(res, resolve, reject);
+        })['catch'](function (err) {
+          return handleError(JSON.parse(err.error), reject);
         });
       });
     }
@@ -132,6 +138,8 @@ var _default = (function () {
           body: JSON.stringify(body)
         }).then(function (res) {
           return response(res, resolve, reject);
+        })['catch'](function (err) {
+          return handleError(JSON.parse(err.error), reject);
         });
       });
     }

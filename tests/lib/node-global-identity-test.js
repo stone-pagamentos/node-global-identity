@@ -134,7 +134,7 @@ describe('GlobalIdentity.authenticate fail', () => {
 
     nock(globalIdentity._url)
       .post('/api/Authorization/Authenticate', JSON.stringify(body))
-      .reply(200, authenticateInvalidKeyReply);
+      .reply(401, authenticateInvalidKeyReply);
 
     globalIdentity.setApiKey('12345');
     globalIdentity.authenticate(userEmail, userPassword).catch((err) => {
@@ -206,7 +206,7 @@ describe('GlobalIdentity.validateToken fail', () => {
 
     nock(globalIdentity._url)
       .post('/api/Authorization/ValidateToken', JSON.stringify(bodyToken))
-      .reply(200, authenticateInvalidKeyReply);
+      .reply(401, authenticateInvalidKeyReply);
 
     globalIdentity.validateToken(token).catch((err) => {
       err.message.should.not.be.empty();
