@@ -2,7 +2,7 @@
 
 Global identity library for node.js. It works only on ES6.
 
-# Instalation
+# How to install
 
 ```bash
 npm install node-global-identity
