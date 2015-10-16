@@ -27,4 +27,14 @@ gi.authenticate(email, password)
     console.error(err);
     // => { message: 'message error' }
   });
+
+gi.validateToken(token)
+  .then((res) => {
+    console.log(res);
+    // => { expiration_in_minutes: 60 }
+  })
+  .catch((err) => {
+    console.error(err);
+    // => { message: 'message error' }
+  });
 ```
