@@ -6,6 +6,16 @@ module.exports = function gruntConfig(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
+    babel: {
+      options: {
+        sourceMap: true,
+      },
+      dist: {
+        files: {
+          'es5/node-global-identity.js': 'lib/node-global-identity.js',
+        },
+      },
+    },
     eslint: {
       target: files,
     },
@@ -35,6 +45,6 @@ module.exports = function gruntConfig(grunt) {
     },
   });
 
-  grunt.registerTask('default', ['test']);
+  grunt.registerTask('default', ['babel']);
   grunt.registerTask('test', ['eslint', 'env:test', 'mochaTest']);
 };

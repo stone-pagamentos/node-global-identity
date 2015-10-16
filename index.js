@@ -1,3 +1,1 @@
-import GlobalIdentity from './lib/node-global-identity.js';
-
-export default GlobalIdentity;
+module.exports = require('./es5/node-global-identity.js');
