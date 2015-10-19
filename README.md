@@ -1,5 +1,7 @@
 # node-global-identity
 
+[![Build Status](https://travis-ci.org/stone-payments/node-global-identity.svg?branch=master)](https://travis-ci.org/stone-payments/node-global-identity)
+
 Global identity library for node.js. It works only on ES6.
 
 # How to install
