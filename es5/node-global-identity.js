@@ -6,8 +6,6 @@ Object.defineProperty(exports, '__esModule', {
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-exports.renameKeys = renameKeys;
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
@@ -19,21 +17,6 @@ var _requestPromise2 = _interopRequireDefault(_requestPromise);
 var _lodash = require('lodash');
 
 var _lodash2 = _interopRequireDefault(_lodash);
-
-function renameKeys(data) {
-  if (typeof data !== 'object' || typeof data === 'undefined' || data === null) {
-    return data;
-  }
-
-  var result = {};
-  var keys = Object.keys(data);
-
-  keys.forEach(function (key) {
-    result[_lodash2['default'].snakeCase(key)] = renameKeys(data[key]);
-  });
-
-  return result;
-}
 
 function handleError(json, reject) {
   return reject({ message: json.OperationReport[0].Message });
@@ -48,6 +31,21 @@ function response(res, resolve, reject) {
   }
 
   return handleError(json, reject);
+}
+
+function renameKeys(data) {
+  if (typeof data !== 'object' || typeof data === 'undefined' || data === null) {
+    return data;
+  }
+
+  var result = {};
+  var keys = Object.keys(data);
+
+  keys.forEach(function (key) {
+    result[_lodash2['default'].snakeCase(key)] = renameKeys(data[key]);
+  });
+
+  return result;
 }
 
 var _default = (function () {
@@ -154,4 +152,5 @@ var _default = (function () {
 })();
 
 exports['default'] = _default;
+module.exports = exports['default'];
 //# sourceMappingURL=node-global-identity.js.map

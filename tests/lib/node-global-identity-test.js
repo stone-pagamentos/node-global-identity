@@ -1,8 +1,10 @@
 import nock from 'nock';
+import sinon from 'sinon';
 import GlobalIdentity from '../../lib/node-global-identity.js';
+import isAuthenticated from '../../lib/express-middleware.js';
 import validateTokenReply from '../fixtures/validate-token-reply.json';
 import authenticateReply from '../fixtures/authenticate-reply.json';
-import authenticateInvalidKeyReply
+import invalidReply
   from '../fixtures/authenticate-invalid-key-reply.json';
 
 let globalIdentity;
@@ -136,7 +138,7 @@ describe('GlobalIdentity.authenticate fail', () => {
 
     nock(globalIdentity._url)
       .post('/api/Authorization/Authenticate', JSON.stringify(body))
-      .reply(401, authenticateInvalidKeyReply);
+      .reply(401, invalidReply);
 
     globalIdentity.setApiKey('12345');
     globalIdentity.authenticate(userEmail, userPassword).catch((err) => {
@@ -209,10 +211,82 @@ describe('GlobalIdentity.validateToken fail', () => {
 
     nock(globalIdentity._url)
       .post('/api/Authorization/ValidateToken', JSON.stringify(bodyToken))
-      .reply(401, authenticateInvalidKeyReply);
+      .reply(401, invalidReply);
 
     globalIdentity.validateToken(token).catch((err) => {
       err.message.should.not.be.empty();
+      done();
+    });
+  });
+});
+
+describe('GlobalIdentity.isAuthenticated (express middleware)', () => {
+  const invalidToken = 'invalidToken';
+  const token = 'TOKENBOLADO!!';
+  const next = sinon.spy();
+  let res;
+
+  beforeEach((done) => {
+    res = {
+      status: sinon.stub(),
+      json: sinon.stub(),
+    };
+
+    next.reset();
+
+    const bodyToken = {
+      ApplicationKey: globalIdentity._apiKey,
+      Token: token,
+    };
+
+    const bodyTokenFail = {
+      ApplicationKey: globalIdentity._apiKey,
+      Token: invalidToken,
+    };
+
+    nock(globalIdentity._url)
+      .post('/api/Authorization/ValidateToken', JSON.stringify(bodyToken))
+      .reply(200, validateTokenReply);
+
+    nock(globalIdentity._url)
+      .post('/api/Authorization/ValidateToken', JSON.stringify(bodyTokenFail))
+      .reply(200, invalidReply);
+    done();
+  });
+
+  it('should return status code 401 without token', (done) => {
+    const req = { headers: [] };
+    res.status.withArgs(401).returns(res);
+
+    isAuthenticated(globalIdentity)(req, res, next);
+    res.status.calledWith(401).should.be.true();
+    done();
+  });
+
+  it('should return status code 401 without auth type', done => {
+    const req = { headers: { authorization: 'xxxxx' } };
+    res.status.withArgs(401).returns(res);
+
+    isAuthenticated(globalIdentity)(req, res, next);
+    res.status.calledWith(401).should.be.true();
+    done();
+  });
+
+  it('should return status code 401 with invalid token', done => {
+    const req = { headers: { authorization: `Bearer ${invalidToken}` } };
+    res.status.withArgs(401).returns(res);
+
+    isAuthenticated(globalIdentity)(req, res, next).then(() => {
+      res.status.calledWith(401).should.be.true();
+      done();
+    });
+  });
+
+  it('should return status code 200', done => {
+    const req = { headers: { authorization: `Bearer ${token}` } };
+
+    isAuthenticated(globalIdentity)(req, res, next).then(() => {
+      next.called.should.be.true();
       done();
     });
   });

@@ -13,6 +13,7 @@ module.exports = function gruntConfig(grunt) {
       dist: {
         files: {
           'es5/node-global-identity.js': 'lib/node-global-identity.js',
+          'es5/express-middleware.js': 'lib/express-middleware.js',
         },
       },
     },
