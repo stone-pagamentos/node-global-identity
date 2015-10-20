@@ -1,7 +1,7 @@
 # node-global-identity
 
 [![Build Status](https://travis-ci.org/stone-payments/node-global-identity.svg?branch=master)](https://travis-ci.org/stone-payments/node-global-identity)
-[![Coverage Status](https://coveralls.io/repos/stone-payments/node-global-identity/badge.svg?branch=coveralls&service=github)](https://coveralls.io/github/stone-payments/node-global-identity?branch=coveralls)
+[![Coverage Status](https://coveralls.io/repos/stone-payments/node-global-identity/badge.svg?branch=coveralls&service=github)](https://coveralls.io/github/stone-payments/node-global-identity?branch=master)
 
 Global identity library for node.js.
 
