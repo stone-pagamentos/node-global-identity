@@ -2,7 +2,8 @@ import nock from 'nock';
 import GlobalIdentity from '../../lib/node-global-identity.js';
 import validateTokenReply from '../fixtures/validate-token-reply.json';
 import authenticateReply from '../fixtures/authenticate-reply.json';
-import authenticateInvalidKeyReply from '../fixtures/authenticate-invalid-key-reply.json';
+import authenticateInvalidKeyReply
+  from '../fixtures/authenticate-invalid-key-reply.json';
 
 let globalIdentity;
 const userEmail = 'email@email.com';
@@ -104,7 +105,8 @@ describe('GlobalIdentity.authenticate', () => {
   it('should return AuthenticationToken', (done) => {
     globalIdentity.authenticate(userEmail, userPassword).then((res) => {
       res.should.have.property('authentication_token');
-      res.authentication_token.should.equal(authenticateReply.AuthenticationToken);
+      res.authentication_token
+        .should.equal(authenticateReply.AuthenticationToken);
       done();
     }).catch(done);
   });
@@ -183,7 +185,8 @@ describe('GlobalIdentity.validateToken', () => {
 
   it('should return expiration_in_minutes', (done) => {
     globalIdentity.validateToken(token).then((res) => {
-      res.expiration_in_minutes.should.equal(validateTokenReply.ExpirationInMinutes);
+      res.expiration_in_minutes
+        .should.equal(validateTokenReply.ExpirationInMinutes);
       done();
     }).catch(done);
   });

@@ -1,5 +1,15 @@
 {
   "extends": "airbnb/base",
+  "rules": {
+    "no-multiple-empty-lines": [2, { "max": 1 }],
+    "max-len": [2, 80, 2,
+      {
+      "ignoreUrls": true,
+      "ignoreComments": true,
+      "ignorePattern": "^\\s*from"
+      }
+    ]
+  },
   "globals": {
     "describe": false,
     "it": false,
