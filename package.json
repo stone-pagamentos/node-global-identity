@@ -6,6 +6,10 @@
   "scripts": {
     "test": "grunt test -v"
   },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:stone-payments/node-global-identity.git"
+  },
   "author": "Stone Pagamentos <dev@stone.com.br>",
   "devDependencies": {
     "babel": "^5.8.23",
