@@ -44,7 +44,13 @@ gi.validateToken(token)
 ## Express middleware
 
 ```js
-import isAuthenticated from 'node-global-identity';
+import GlobalIdentity from 'node-global-identity';
+import { isAuthenticated } from 'node-global-identity';
+
+const gi = new GlobalIdentity({
+  apiKey: 'YOUR-API-KEY',
+  url: 'GLOBAL-IDENTITY-ADDRESS',
+});
 
 app.use('/path', isAuthenticated(gi), (req, res, next) => {
   console.log(req.token);
