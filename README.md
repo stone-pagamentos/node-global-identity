@@ -40,3 +40,14 @@ gi.validateToken(token)
     // => { message: 'message error' }
   });
 ```
+
+## Express middleware
+
+```js
+import isAuthenticated from 'node-global-identity';
+
+app.use('/path', isAuthenticated(gi), (req, res, next) => {
+  console.log(req.token);
+  // => { token: 'USER-TOKEN', expiration_in_minutes: 48 }
+});
+```

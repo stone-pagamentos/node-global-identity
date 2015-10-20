@@ -1,6 +1,6 @@
 {
   "name": "node-global-identity",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Global indentity library for node.js",
   "main": "index.js",
   "scripts": {
@@ -21,7 +21,8 @@
     "load-grunt-tasks": "^3.3.0",
     "mocha": "^2.3.3",
     "nock": "^2.15.0",
-    "should": "^7.1.0"
+    "should": "^7.1.0",
+    "sinon": "^1.17.1"
   },
   "dependencies": {
     "continuation-local-storage": "^3.1.4",
