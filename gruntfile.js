@@ -1,7 +1,7 @@
 module.exports = function gruntConfig(grunt) {
   require('load-grunt-tasks')(grunt);
 
-  const files = ['gruntfile.js', 'index.js', 'tests/**/*.js', 'libs/**/*.js'];
+  const files = ['gruntfile.js', 'index.js', 'tests/**/*.js', 'lib/**/*.js'];
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),

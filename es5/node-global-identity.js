@@ -14,9 +14,7 @@ var _requestPromise = require('request-promise');
 
 var _requestPromise2 = _interopRequireDefault(_requestPromise);
 
-var _lodash = require('lodash');
-
-var _lodash2 = _interopRequireDefault(_lodash);
+var _stringHelper = require('string-helper');
 
 function handleError(json, reject) {
   return reject({ message: json.OperationReport[0].Message });
@@ -27,25 +25,10 @@ function response(res, resolve, reject) {
 
   if (json.Success) {
     delete json.OperationReport;
-    return resolve(renameKeys(json));
+    return resolve((0, _stringHelper.renameKeys)(json));
   }
 
   return handleError(json, reject);
-}
-
-function renameKeys(data) {
-  if (typeof data !== 'object' || typeof data === 'undefined' || data === null) {
-    return data;
-  }
-
-  var result = {};
-  var keys = Object.keys(data);
-
-  keys.forEach(function (key) {
-    result[_lodash2['default'].snakeCase(key)] = renameKeys(data[key]);
-  });
-
-  return result;
 }
 
 var _default = (function () {
