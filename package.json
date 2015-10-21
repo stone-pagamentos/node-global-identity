@@ -1,6 +1,6 @@
 {
   "name": "node-global-identity",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Global indentity library for node.js",
   "main": "index.js",
   "scripts": {
@@ -33,6 +33,6 @@
     "continuation-local-storage": "^3.1.4",
     "lodash": "^3.10.1",
     "request-promise": "^1.0.1",
-    "string-helper": "^0.0.1"
+    "string-helper": "^0.0.2"
   }
 }
