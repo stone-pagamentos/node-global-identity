@@ -1,5 +1,6 @@
 import nock from 'nock';
 import sinon from 'sinon';
+import hat from 'hat';
 import GlobalIdentity from '../../lib/node-global-identity.js';
 import isAuthenticated from '../../lib/express-middleware.js';
 import validateTokenReply from '../fixtures/validate-token-reply.json';
@@ -287,6 +288,131 @@ describe('GlobalIdentity.isAuthenticated (express middleware)', () => {
 
     isAuthenticated(globalIdentity)(req, res, next).then(() => {
       next.called.should.be.true();
+      done();
+    });
+  });
+});
+
+describe('ManagementAPI._getHeaders', () => {
+  const now = Date.now();
+  const verb = 'GET';
+  const nonce = hat();
+  const apiUri = 'api/Management/applicationkey/users/email';
+
+  it('should return "Authorization" attr', (done) => {
+    const result = globalIdentity._getHeaders(verb, apiUri, now, nonce);
+
+    result.should.have.property('Authorization');
+    done();
+  });
+
+  it('should have hmac', (done) => {
+    const result = globalIdentity._getHeaders(verb, apiUri, now, nonce);
+
+    result.Authorization.should.startWith('hmac');
+    done();
+  });
+
+  it('should have apiKey', (done) => {
+    const result = globalIdentity._getHeaders(verb, apiUri, now, nonce);
+    const [, apiKey] = result.Authorization.split(' ');
+
+    apiKey.should.startWith(globalIdentity._apiKey);
+    done();
+  });
+
+  it('should have timestamp', (done) => {
+    const result = globalIdentity._getHeaders(verb, apiUri, now, nonce);
+    const [, timestamp] = result.Authorization.split(':');
+    const stringNow = Math.floor(now / 1000).toString();
+
+    timestamp.should.equal(stringNow);
+    done();
+  });
+
+  it('should have nonce', (done) => {
+    const result = globalIdentity._getHeaders(verb, apiUri, now, nonce);
+    const [,, currentNonce] = result.Authorization.split(':');
+
+    currentNonce.should.equal(nonce);
+    done();
+  });
+
+  it('should have hashedSequence', (done) => {
+    const result = globalIdentity._getHeaders(verb, apiUri, now, nonce);
+    const [,,, hashedSequence] = result.Authorization.split(':');
+    const expectedHash = globalIdentity
+      ._getHashedSequence(verb, apiUri, Math.floor(now / 1000), nonce);
+
+    hashedSequence.should.equal(expectedHash);
+    done();
+  });
+});
+
+describe('ManagementAPI._getHashedSequence', () => {
+  const now = Math.floor(Date.now() / 1000);
+  const verb = 'GET';
+  const nonce = hat();
+  const apiUri = 'api/Management/applicationkey/users/email';
+
+  it('should not accept POST verb', (done) => {
+    const result = globalIdentity
+      ._getHashedSequence('POST', apiUri, now, nonce);
+
+    result.should.be.false();
+    done();
+  });
+
+  it('should not accept PUT verb', (done) => {
+    const result = globalIdentity
+      ._getHashedSequence('PUT', apiUri, now, nonce);
+
+    result.should.be.false();
+    done();
+  });
+
+  it('should not accept PATCH verb', (done) => {
+    const result = globalIdentity
+      ._getHashedSequence('PUT', apiUri, now, nonce);
+
+    result.should.be.false();
+    done();
+  });
+
+  describe('GET and DELETE verbs', () => {
+    it('should return the verb in lower case', (done) => {
+      const result = globalIdentity
+        ._getHashedSequence(verb, apiUri, now, nonce);
+
+      result.should.startWith(verb.toLowerCase());
+      done();
+    });
+
+    it('should return api uri in lower case', (done) => {
+      const result = globalIdentity
+        ._getHashedSequence(verb, apiUri, now, nonce);
+      const [, uri] = result.split(';');
+
+      uri.should.startWith(apiUri.toLowerCase());
+      done();
+    });
+
+    it('should return timestamp', (done) => {
+      const result = globalIdentity
+        ._getHashedSequence(verb, apiUri, now, nonce);
+      const [,, timestamp] = result.split(';');
+      const stringNow = now.toString();
+
+      timestamp.should.equal(stringNow);
+      done();
+    });
+
+    it('should return nonce', (done) => {
+      const result = globalIdentity
+        ._getHashedSequence(verb, apiUri, now, nonce);
+      const [,,, currentNonce] = result.split(';');
+
+      currentNonce.should.equal(nonce.toLowerCase());
       done();
     });
   });
