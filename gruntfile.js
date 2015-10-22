@@ -47,5 +47,5 @@ module.exports = function gruntConfig(grunt) {
   });
 
   grunt.registerTask('default', ['babel']);
-  grunt.registerTask('test', ['eslint', 'env:test', 'mochaTest']);
+  grunt.registerTask('test', ['eslint', 'env:test', 'mochaTest', 'babel']);
 };
