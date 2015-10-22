@@ -26,10 +26,7 @@ function isAuthenticated(globalIdentity) {
     }
 
     return globalIdentity.validateToken(token).then(function (result) {
-      req.token = {
-        token: token,
-        expiration_in_minutes: result.expiration_in_minutes
-      };
+      req.user = Object.assign(result, { token: token });
       return next();
     })['catch'](function () {
       return res.status(401).json({ error: { message: 'Invalid token' } });
