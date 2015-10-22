@@ -199,6 +199,30 @@ describe('GlobalIdentity.validateToken', () => {
       done();
     }).catch(done);
   });
+
+  it('should return email', (done) => {
+    globalIdentity.validateToken(token).then((res) => {
+      res.email
+        .should.equal(validateTokenReply.Email);
+      done();
+    }).catch(done);
+  });
+
+  it('should return name', (done) => {
+    globalIdentity.validateToken(token).then((res) => {
+      res.name
+        .should.equal(validateTokenReply.Name);
+      done();
+    }).catch(done);
+  });
+
+  it('should return source_application', (done) => {
+    globalIdentity.validateToken(token).then((res) => {
+      res.source_application
+        .should.equal(validateTokenReply.SourceApplication);
+      done();
+    }).catch(done);
+  });
 });
 
 describe('GlobalIdentity.validateToken fail', () => {
@@ -289,5 +313,18 @@ describe('GlobalIdentity.isAuthenticated (express middleware)', () => {
       next.called.should.be.true();
       done();
     });
+  });
+
+  it('should return correct req.user', (done) => {
+    const req = { headers: { authorization: `Bearer ${token}` } };
+
+    isAuthenticated(globalIdentity)(req, res, next).then(() => {
+      req.user.name.should.equal(validateTokenReply.Name);
+      req.user.token.should.equal(token);
+      req.user.email.should.equal(validateTokenReply.Email);
+      req.user.expiration_in_minutes
+        .should.equal(validateTokenReply.ExpirationInMinutes);
+      done();
+    }).catch(done);
   });
 });

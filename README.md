@@ -34,7 +34,12 @@ gi.authenticate(email, password)
 gi.validateToken(token)
   .then((res) => {
     console.log(res);
-    // => { expiration_in_minutes: 60 }
+    // => {
+    // =>   expiration_in_minutes: 60,
+    // =>   name: 'Name',
+    // =>   email: 'Email',
+    // =>   source_application: 'app'
+    // => }
   })
   .catch((err) => {
     console.error(err);
@@ -54,7 +59,12 @@ const gi = new GlobalIdentity({
 });
 
 app.use('/path', isAuthenticated(gi), (req, res, next) => {
-  console.log(req.token);
-  // => { token: 'USER-TOKEN', expiration_in_minutes: 48 }
+  console.log(req.user);
+  // => {
+  // =>   expiration_in_minutes: 60,
+  // =>   name: 'Name',
+  // =>   email: 'Email',
+  // =>   token: 'USER-TOKEN'
+  // => }
 });
 ```
