@@ -77,5 +77,5 @@ app.use('/path', isAuthenticated(gi), (req, res, next) => {
 [coverage-image]: https://coveralls.io/repos/stone-payments/node-global-identity/badge.svg?branch=master&service=github
 [dependencies-url]: https://david-dm.org/stone-payments/node-global-identity
 [dependencies-image]: https://david-dm.org/stone-payments/node-global-identity.svg
-[dependencies-dev-url]: https://david-dm.org/stone-payments/string-helper#info=devDependencies&view=table
-[dependencies-dev-image]: https://david-dm.org/stone-payments/string-helper/dev-status.svg
+[dependencies-dev-url]: https://david-dm.org/stone-payments/node-global-identity#info=devDependencies&view=table
+[dependencies-dev-image]: https://david-dm.org/stone-payments/node-global-identity/dev-status.svg
