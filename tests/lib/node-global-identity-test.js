@@ -328,3 +328,12 @@ describe('GlobalIdentity.isAuthenticated (express middleware)', () => {
     }).catch(done);
   });
 });
+
+describe('GlobalIdentity._getHeaders', () => {
+  it('should return "content-type: application/json"', (done) => {
+    const result = globalIdentity._getHeaders();
+
+    result['content-type'].should.equal('application/json');
+    done();
+  });
+});

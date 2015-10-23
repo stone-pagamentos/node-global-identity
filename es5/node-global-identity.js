@@ -82,7 +82,8 @@ var _default = (function () {
         return (0, _requestPromise2['default'])({
           method: 'POST',
           uri: _this._getUrl('/api/Authorization/Authenticate'),
-          body: JSON.stringify(body)
+          body: JSON.stringify(body),
+          headers: _this._getHeaders()
         }).then(function (res) {
           return response(res, resolve, reject);
         })['catch'](function (err) {
@@ -116,13 +117,19 @@ var _default = (function () {
         return (0, _requestPromise2['default'])({
           method: 'POST',
           uri: _this2._getUrl('/api/Authorization/ValidateToken'),
-          body: JSON.stringify(body)
+          body: JSON.stringify(body),
+          headers: _this2._getHeaders()
         }).then(function (res) {
           return response(res, resolve, reject);
         })['catch'](function (err) {
           return handleError(JSON.parse(err.error), reject);
         });
       });
+    }
+  }, {
+    key: '_getHeaders',
+    value: function _getHeaders() {
+      return { 'content-type': 'application/json' };
     }
   }, {
     key: '_getUrl',
