@@ -1,7 +1,9 @@
 # node-global-identity
 
-[![Build Status](https://travis-ci.org/stone-payments/node-global-identity.svg?branch=master)](https://travis-ci.org/stone-payments/node-global-identity)
-[![Coverage Status](https://coveralls.io/repos/stone-payments/node-global-identity/badge.svg?branch=master&service=github)](https://coveralls.io/github/stone-payments/node-global-identity?branch=master)
+[![Build Status][ci-image]][ci-url]
+[![Coverage Status][coverage-image]][coverage-url]
+[![Dependencies][dependencies-image]][dependencies-url]
+[![Dev dependencies][dependencies-dev-image]][dependencies-dev-url]
 
 Global identity library for node.js.
 
@@ -68,3 +70,12 @@ app.use('/path', isAuthenticated(gi), (req, res, next) => {
   // => }
 });
 ```
+
+[ci-url]: https://travis-ci.org/stone-payments/node-global-identity
+[ci-image]: https://travis-ci.org/stone-payments/node-global-identity.svg?branch=master
+[coverage-url]: https://coveralls.io/github/stone-payments/node-global-identity?branch=master
+[coverage-image]: https://coveralls.io/repos/stone-payments/node-global-identity/badge.svg?branch=master&service=github
+[dependencies-url]: https://david-dm.org/stone-payments/node-global-identity
+[dependencies-image]: https://david-dm.org/stone-payments/node-global-identity.svg
+[dependencies-dev-url]: https://david-dm.org/stone-payments/string-helper#info=devDependencies&view=table
+[dependencies-dev-image]: https://david-dm.org/stone-payments/string-helper/dev-status.svg
