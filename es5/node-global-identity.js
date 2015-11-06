@@ -3,12 +3,9 @@
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+exports['default'] = globalIdentity;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 var _requestPromise = require('request-promise');
 
@@ -16,11 +13,11 @@ var _requestPromise2 = _interopRequireDefault(_requestPromise);
 
 var _stringHelper = require('string-helper');
 
-function handleError(json, reject) {
+function _handleError(json, reject) {
   return reject({ message: json.OperationReport[0].Message });
 }
 
-function response(res, resolve, reject) {
+function _response(res, resolve, reject) {
   var json = JSON.parse(res);
 
   if (json.Success) {
@@ -28,34 +25,34 @@ function response(res, resolve, reject) {
     return resolve((0, _stringHelper.renameKeys)(json));
   }
 
-  return handleError(json, reject);
+  return _handleError(json, reject);
 }
 
-var _default = (function () {
-  function _default() {
-    var obj = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+function _getHeaders() {
+  return { 'content-type': 'application/json' };
+}
 
-    _classCallCheck(this, _default);
+function globalIdentity() {
+  var obj = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
-    this._apiKey = obj.apiKey;
-    this._url = obj.url;
-  }
+  var _this = this;
+  _this._apiKey = obj.apiKey;
+  _this._url = obj.url;
 
-  _createClass(_default, [{
-    key: 'setApiKey',
-    value: function setApiKey(apiKey) {
-      this._apiKey = apiKey;
-    }
-  }, {
-    key: 'setUrl',
-    value: function setUrl(url) {
-      this._url = url;
-    }
-  }, {
-    key: 'authenticate',
-    value: function authenticate(email, password) {
-      var _this = this;
+  var _getUrl = function _getUrl(endpoint) {
+    return _this._url + endpoint;
+  };
 
+  return {
+    setApiKey: function setApiKey(apiKey) {
+      _this._apiKey = apiKey;
+    },
+
+    setUrl: function setUrl(url) {
+      _this._url = url;
+    },
+
+    authenticate: function authenticate(email, password) {
       return new Promise(function (resolve, reject) {
         if (!_this._url) {
           return reject({ message: 'Must have url' });
@@ -81,27 +78,26 @@ var _default = (function () {
 
         return (0, _requestPromise2['default'])({
           method: 'POST',
-          uri: _this._getUrl('/api/Authorization/Authenticate'),
+          uri: _getUrl('/api/Authorization/Authenticate'),
           body: JSON.stringify(body),
-          headers: _this._getHeaders()
+          headers: _getHeaders()
         }).then(function (res) {
-          return response(res, resolve, reject);
+          return _response(res, resolve, reject);
         })['catch'](function (err) {
-          return handleError(JSON.parse(err.error), reject);
+          return _handleError(JSON.parse(err.error), reject);
         });
       });
-    }
-  }, {
-    key: 'validateToken',
-    value: function validateToken(token) {
+    },
+
+    validateToken: function validateToken(token) {
       var _this2 = this;
 
       return new Promise(function (resolve, reject) {
-        if (!_this2._url) {
+        if (!_this._url) {
           return reject({ message: 'Must have url' });
         }
 
-        if (!_this2._apiKey) {
+        if (!_this._apiKey) {
           return reject({ message: 'Must have an apiKey' });
         }
 
@@ -116,31 +112,18 @@ var _default = (function () {
 
         return (0, _requestPromise2['default'])({
           method: 'POST',
-          uri: _this2._getUrl('/api/Authorization/ValidateToken'),
+          uri: _getUrl('/api/Authorization/ValidateToken'),
           body: JSON.stringify(body),
-          headers: _this2._getHeaders()
+          headers: _getHeaders()
         }).then(function (res) {
-          return response(res, resolve, reject);
+          return _response(res, resolve, reject);
         })['catch'](function (err) {
-          return handleError(JSON.parse(err.error), reject);
+          return _handleError(JSON.parse(err.error), reject);
         });
       });
     }
-  }, {
-    key: '_getHeaders',
-    value: function _getHeaders() {
-      return { 'content-type': 'application/json' };
-    }
-  }, {
-    key: '_getUrl',
-    value: function _getUrl(endpoint) {
-      return this._url + endpoint;
-    }
-  }]);
+  };
+}
 
-  return _default;
-})();
-
-exports['default'] = _default;
 module.exports = exports['default'];
 //# sourceMappingURL=node-global-identity.js.map
