@@ -3,7 +3,7 @@
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-exports['default'] = globalIdentity;
+exports['default'] = GlobalIdentity;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -32,7 +32,7 @@ function _getHeaders() {
   return { 'content-type': 'application/json' };
 }
 
-function globalIdentity() {
+function GlobalIdentity() {
   var obj = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
   var _this = this;
