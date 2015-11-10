@@ -7,7 +7,7 @@ node_js:
   - '4.1'
   - '4.2'
   - '5.0'
-before_script:
+before_install:
   - npm install -g grunt-cli istanbul
 after_success:
   - istanbul cover ./node_modules/mocha/bin/_mocha --require ./node_modules/babel/register.js --require ./node_modules/should/index.js --report lcovonly -- tests/** -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
