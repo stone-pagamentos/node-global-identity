@@ -27,40 +27,12 @@ afterEach((done) => {
 });
 
 describe('GlobalIdentity.constructor', () => {
-  // it('should set _apiKey attr', (done) => {
-  //   globalIdentity = new GlobalIdentity({ apiKey: 'api-key-setada' });
-  //   globalIdentity._apiKey.should.equal('api-key-setada');
-  //   done();
-  // });
-  //
-  // it('should set _url attr', (done) => {
-  //   globalIdentity = new GlobalIdentity({ url: 'http://local.global.identity' });
-  //   globalIdentity._url.should.equal('http://local.global.identity');
-  //   done();
-  // });
-
   it('should accept empty args', (done) => {
     globalIdentity = new GlobalIdentity();
     globalIdentity.should.be.an.Object();
     done();
   });
 });
-
-// describe('GlobalIdentity.setApiKey', () => {
-//   it('should set _apiKey attr', (done) => {
-//     globalIdentity.setApiKey('api-key-setada-set');
-//     globalIdentity._apiKey.should.equal('api-key-setada-set');
-//     done();
-//   });
-// });
-
-// describe('GlobalIdentity.setUrl', () => {
-//   it('should set _url attr', (done) => {
-//     globalIdentity.setUrl('url');
-//     globalIdentity._url.should.equal('url');
-//     done();
-//   });
-// });
 
 describe('GlobalIdentity.authenticate', () => {
   beforeEach((done) => {
