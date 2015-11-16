@@ -53,14 +53,13 @@ gi.validateToken(token)
 
 ```js
 import GlobalIdentity from 'node-global-identity';
-import { isAuthenticated } from 'node-global-identity';
 
 const gi = new GlobalIdentity({
   apiKey: 'YOUR-API-KEY',
   url: 'GLOBAL-IDENTITY-ADDRESS',
 });
 
-app.use('/path', isAuthenticated(gi), (req, res, next) => {
+app.use('/path', gi.isAuthenticated(), (req, res, next) => {
   console.log(req.user);
   // => {
   // =>   expiration_in_minutes: 60,
