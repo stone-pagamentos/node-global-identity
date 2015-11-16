@@ -126,7 +126,7 @@ describe('GlobalIdentity.validateToken', () => {
   const token = 'TOKENBOLADO';
   beforeEach((done) => {
     const bodyToken = {
-      ApplicationKey: globalIdentity._apiKey,
+      ApplicationKey: apiKey,
       Token: token,
     };
 
@@ -203,7 +203,7 @@ describe('GlobalIdentity.validateToken fail', () => {
   it('should return message error', (done) => {
     const token = 'tokenerrado';
     const bodyToken = {
-      ApplicationKey: globalIdentity._apiKey,
+      ApplicationKey: apiKey,
       Token: token,
     };
 
@@ -218,7 +218,7 @@ describe('GlobalIdentity.validateToken fail', () => {
   });
 });
 
-describe('GlobalIdentity.isAuthenticated (express middleware)', () => {
+describe('isAuthenticated (express middleware)', () => {
   const invalidToken = 'invalidToken';
   const token = 'TOKENBOLADO!!';
   const next = sinon.spy();
@@ -233,12 +233,12 @@ describe('GlobalIdentity.isAuthenticated (express middleware)', () => {
     next.reset();
 
     const bodyToken = {
-      ApplicationKey: globalIdentity._apiKey,
+      ApplicationKey: apiKey,
       Token: token,
     };
 
     const bodyTokenFail = {
-      ApplicationKey: globalIdentity._apiKey,
+      ApplicationKey: apiKey,
       Token: invalidToken,
     };
 
@@ -293,6 +293,91 @@ describe('GlobalIdentity.isAuthenticated (express middleware)', () => {
     const req = { headers: { authorization: `Bearer ${token}` } };
 
     isAuthenticated(globalIdentity)(req, res, next).then(() => {
+      req.user.name.should.equal(validateTokenReply.Name);
+      req.user.token.should.equal(token);
+      req.user.email.should.equal(validateTokenReply.Email);
+      req.user.expiration_in_minutes
+        .should.equal(validateTokenReply.ExpirationInMinutes);
+      done();
+    }).catch(done);
+  });
+});
+
+describe('GlobalIdentity.isAuthenticated (express middleware)', () => {
+  const invalidToken = 'invalidToken';
+  const token = 'TOKENBOLADO!!';
+  const next = sinon.spy();
+  let res;
+
+  beforeEach((done) => {
+    res = {
+      status: sinon.stub(),
+      json: sinon.stub(),
+    };
+
+    next.reset();
+
+    const bodyToken = {
+      ApplicationKey: apiKey,
+      Token: token,
+    };
+
+    const bodyTokenFail = {
+      ApplicationKey: apiKey,
+      Token: invalidToken,
+    };
+
+    nock(url)
+      .post('/api/Authorization/ValidateToken', JSON.stringify(bodyToken))
+      .reply(200, validateTokenReply);
+
+    nock(url)
+      .post('/api/Authorization/ValidateToken', JSON.stringify(bodyTokenFail))
+      .reply(200, invalidReply);
+    done();
+  });
+
+  it('should return status code 401 without token', (done) => {
+    const req = { headers: [] };
+    res.status.withArgs(401).returns(res);
+
+    globalIdentity.isAuthenticated(globalIdentity)(req, res, next);
+    res.status.calledWith(401).should.be.true();
+    done();
+  });
+
+  it('should return status code 401 without auth type', done => {
+    const req = { headers: { authorization: 'xxxxx' } };
+    res.status.withArgs(401).returns(res);
+
+    globalIdentity.isAuthenticated(globalIdentity)(req, res, next);
+    res.status.calledWith(401).should.be.true();
+    done();
+  });
+
+  it('should return status code 401 with invalid token', done => {
+    const req = { headers: { authorization: `Bearer ${invalidToken}` } };
+    res.status.withArgs(401).returns(res);
+
+    globalIdentity.isAuthenticated(globalIdentity)(req, res, next).then(() => {
+      res.status.calledWith(401).should.be.true();
+      done();
+    });
+  });
+
+  it('should return status code 200', done => {
+    const req = { headers: { authorization: `Bearer ${token}` } };
+
+    globalIdentity.isAuthenticated(globalIdentity)(req, res, next).then(() => {
+      next.called.should.be.true();
+      done();
+    });
+  });
+
+  it('should return correct req.user', (done) => {
+    const req = { headers: { authorization: `Bearer ${token}` } };
+
+    globalIdentity.isAuthenticated(globalIdentity)(req, res, next).then(() => {
       req.user.name.should.equal(validateTokenReply.Name);
       req.user.token.should.equal(token);
       req.user.email.should.equal(validateTokenReply.Email);

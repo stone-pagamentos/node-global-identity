@@ -8,7 +8,17 @@ var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = 
 
 exports['default'] = isAuthenticated;
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _depd = require('depd');
+
+var _depd2 = _interopRequireDefault(_depd);
+
+var deprecate = (0, _depd2['default'])('node-global-identity');
+
 function isAuthenticated(globalIdentity) {
+  deprecate('isAuthenticated(gi): Use gi.isAuthenticated() instead');
+
   return function (req, res, next) {
     if (!req.headers.authorization) {
       return res.status(401).json({ error: { message: 'Invalid token' } });
