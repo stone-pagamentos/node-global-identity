@@ -1,11 +1,10 @@
 {
   "name": "node-global-identity",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Global indentity library for node.js",
   "main": "index.js",
   "scripts": {
-    "test": "grunt test -v",
-    "postinstall": "grunt babel"
+    "test": "grunt test -v"
   },
   "repository": {
     "type": "git",
