@@ -70,11 +70,11 @@ app.use('/path', gi.isAuthenticated(), (req, res, next) => {
 });
 ```
 
-[ci-url]: https://travis-ci.org/stone-payments/node-global-identity
-[ci-image]: https://travis-ci.org/stone-payments/node-global-identity.svg?branch=master
-[coverage-url]: https://coveralls.io/github/stone-payments/node-global-identity?branch=master
-[coverage-image]: https://coveralls.io/repos/stone-payments/node-global-identity/badge.svg?branch=master&service=github
-[dependencies-url]: https://david-dm.org/stone-payments/node-global-identity
-[dependencies-image]: https://david-dm.org/stone-payments/node-global-identity.svg
-[dependencies-dev-url]: https://david-dm.org/stone-payments/node-global-identity#info=devDependencies&view=table
-[dependencies-dev-image]: https://david-dm.org/stone-payments/node-global-identity/dev-status.svg
+[ci-url]: https://travis-ci.org/stone-pagamentos/node-global-identity
+[ci-image]: https://travis-ci.org/stone-pagamentos/node-global-identity.svg?branch=master
+[coverage-url]: https://coveralls.io/github/stone-pagamentos/node-global-identity?branch=master
+[coverage-image]: https://coveralls.io/repos/stone-pagamentos/node-global-identity/badge.svg?branch=master&service=github
+[dependencies-url]: https://david-dm.org/stone-pagamentos/node-global-identity
+[dependencies-image]: https://david-dm.org/stone-pagamentos/node-global-identity.svg
+[dependencies-dev-url]: https://david-dm.org/stone-pagamentos/node-global-identity#info=devDependencies&view=table
+[dependencies-dev-image]: https://david-dm.org/stone-pagamentos/node-global-identity/dev-status.svg
