@@ -1,12 +1,12 @@
 language: node_js
 node_js:
-  - '0.10'
-  - '0.11'
-  - '0.12'
   - '4.0'
   - '4.1'
   - '4.2'
   - '5.0'
+  - '5.1'
+  - '5.2'
+  - '5.3'
 before_install:
   - npm install -g grunt-cli istanbul
 after_success:
@@ -15,7 +15,7 @@ deploy:
   provider: npm
   email: mguilarducci@gmail.com
   api_key:
-    secure: RcGGM2ANclTaD9xsW+jBTjGdpNIx1fI0DxvssIyOlTjcZrYRvvdzGMOrOcx+zJiANwrp7/1zt9giUxF72WaFmu17a6h6ssC/KHLXTgUpIreHkp7/RvhkJY0Ugj2LFwEX1PsnMSqRKseUA0tiqlbxMtCy6LsSfFs4ala7NB/BQZqm1BV6c49MxH42yfsNebqgHRT6QMphO75hfV+mntF7kkam7lxEnRyEUH1+RODgwqY1SE8irLMfvV9syycHoG7zhGuLy/aL/UAC2O66G8fbJMg9otpLSbtV4gqUc6J3TW66f8HJe/pg4nFmTy/lbvuPU8YRmt7ugBMbCcOHm06qbBw7OPiwgqMqkaR5CyYyZowQgnyEHjgSPsiSgakJ8KgzyztjtMIfc1OAztKpgN0TIEf3RDhkODWcf1+k1Rw5qEWH7FqrZc8nXKa4eLlyHBjCWbGzbBA5mDNbgxwmXIERCTx7eHvT4SJUSd4JCwbCQ4bjI14ZNxOL2OQAcXajERpr3pcaRd6usGEnOaNit7Bg6ha0tMAWCw4VQVRQFClT8FcIY69YujrQRgFMN8JW5AWF/s0buMsqaAvCZPt8G2oqydnqsaKEwbKoA8TabaCeN7JvKpGKKjUpUYAGdPFpxIAC9xk1fYdmnu3X9+BAYHpPNlhkkhXGt1Nq2iwYaTRUBdI=
+    secure: MMTyS+Ltv4VvAgGM2lCbXXZbHt7JkOzBzWBw2l0KrQDsScm5NzuNXTO9prMiCimJnQ0DdvJPNyOEJVclSlJ9JUaXslYF5IK8y1GX9FNaYSH5kQgR9WgKIe8oWPnqIldnkefTlMOJbjn5/8mpMzxQg0jSJTqm1tuX33Am7AOBfR1q5bBRtqxHEXdUpbX8tEmY6SeZQyD1aRpQVjeVbwYx6MKWxZlkdxCqTxp6xDX+IQ5gTAJHLugESrTUpdN0KymIMtcK76Ezlo0LJFPCqeDosIMJbS8hvoI8S8GRsYW7kV8ayb8DqiPUDPUefU5is/K7Jma+tZor5wTlLTnCNbPGuHkla9O1kUQqPlwEK2k8GmtrYjbDMyUzbEVbOzIEQG4QuM6buwvvVGDpTuWV6mg4jTkJKjy++UdzW92h+PqHUOZlJ1KFwcbmDa88HPwCnZfIg4t0s5F7hNFHA2Y77Uvo3CUws/YthBCktjs+pGkj4Wgc8goNajuCVyrN3HEMhfZuM+ofAnvaN4w+Dh8reOr2M5DJ9+/4AUpB2GcZjTAtHJRkw+e/FVufNg4d02i7Mzx2kzvaI5ZIqoJ8MXrnuCrQJ3g1zihArPVqHkQJ6XUlxl6AyBcfDn1xpL0E8/SRCAqMWsF4leaN198TRAHje015g1Rt6x9T6uHJ+3QBOZlJRAE=
   on:
     tags: true
     repo: stone-pagamentos/node-global-identity
