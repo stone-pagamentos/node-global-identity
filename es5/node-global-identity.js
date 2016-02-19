@@ -17,7 +17,8 @@ var _requestPromise2 = _interopRequireDefault(_requestPromise);
 var _stringHelper = require('string-helper');
 
 function _handleError(json, reject) {
-  return reject({ message: json.OperationReport[0].Message });
+  var jsonOp = json.OperationReport[0];
+  return jsonOp === undefined || jsonOp === null ? reject({ message: 'No report' }) : reject({ message: jsonOp.Message });
 }
 
 function _response(res, resolve, reject) {
@@ -117,6 +118,46 @@ function GlobalIdentity() {
           body: JSON.stringify(body),
           headers: _getHeaders()
         }).then(function (res) {
+          return _response(res, resolve, reject);
+        })['catch'](function (err) {
+          return _handleError(JSON.parse(err.error), reject);
+        });
+      });
+    },
+
+    checkRolePermission: function checkRolePermission(userKey, roles) {
+      return new Promise(function (resolve, reject) {
+        if (!_this._url) {
+          return reject({ message: 'Must have url' });
+        }
+
+        if (!_this._apiKey) {
+          return reject({ message: 'Must have an apiKey' });
+        }
+
+        if (!userKey) {
+          return reject({ message: 'Must have an userKey' });
+        }
+
+        if (!roles) {
+          return reject({ message: 'Must have a role' });
+        }
+
+        var body = {
+          ApplicationKey: _this._apiKey,
+          UserKey: userKey,
+          RoleCollection: roles
+        };
+
+        return (0, _requestPromise2['default'])({
+          method: 'POST',
+          uri: _getUrl('/api/Authorization/IsUserInRole'),
+          body: JSON.stringify(body),
+          headers: _getHeaders()
+        }).then(function (res) {
+          // const json = JSON.parse(res);
+          // delete json.OperationReport;
+          // return resolve(renameKeys(json));
           return _response(res, resolve, reject);
         })['catch'](function (err) {
           return _handleError(JSON.parse(err.error), reject);
