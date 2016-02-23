@@ -4,8 +4,11 @@ import GlobalIdentity from '../../lib/node-global-identity.js';
 import isAuthenticated from '../../lib/express-middleware.js';
 import validateTokenReply from '../fixtures/validate-token-reply.json';
 import authenticateReply from '../fixtures/authenticate-reply.json';
+import checkRolePermissionReply from '../fixtures/check-permission-reply.json';
 import invalidReply
   from '../fixtures/authenticate-invalid-key-reply.json';
+import invalidPermission
+  from '../fixtures/check-permission-invalid.json';
 
 let globalIdentity;
 const userEmail = 'email@email.com';
@@ -215,6 +218,129 @@ describe('GlobalIdentity.validateToken fail', () => {
       err.message.should.not.be.empty();
       done();
     });
+  });
+});
+
+describe('GlobalIdentity.checkRolePermission', () => {
+  const userKey = 'USERKEYBOLADO';
+  const roles = ['ROLES_BOLADO'];
+  beforeEach((done) => {
+    const bodyUser = {
+      ApplicationKey: apiKey,
+      UserKey: userKey,
+      RoleCollection: roles,
+    };
+
+    nock(url)
+      .post('/api/Authorization/IsUserInRole', JSON.stringify(bodyUser))
+      .reply(200, checkRolePermissionReply);
+    done();
+  });
+
+  it('should have url', (done) => {
+    globalIdentity.setUrl(undefined);
+    globalIdentity.checkRolePermission(userKey, roles).catch((err) => {
+      err.message.should.match(/Must have url/);
+      done();
+    });
+  });
+
+  it('should have api key', (done) => {
+    globalIdentity.setApiKey(undefined);
+    globalIdentity.checkRolePermission(userKey, roles).catch((err) => {
+      err.message.should.match(/Must have an apiKey/);
+      done();
+    });
+  });
+
+  it('should have user key', (done) => {
+    globalIdentity.checkRolePermission(undefined, roles).catch((err) => {
+      err.message.should.match(/Must have an userKey/);
+      done();
+    });
+  });
+
+  it('should have user roles', (done) => {
+    globalIdentity.checkRolePermission(userKey, undefined).catch((err) => {
+      err.message.should.match(/Must have a role/);
+      done();
+    });
+  });
+
+  it('should return success', (done) => {
+    globalIdentity.checkRolePermission(userKey, roles).then((res) => {
+      res.success.should.equal(checkRolePermissionReply.Success);
+      done();
+    }).catch(done);
+  });
+});
+
+describe('GlobalIdentity.checkRolePermission fail', () => {
+  it('should return message error', (done) => {
+    const userKey = 'USERKEYERRADA';
+    const roles = ['ROLES_ERRADO'];
+    const bodyUser = {
+      ApplicationKey: apiKey,
+      UserKey: userKey,
+      RoleCollection: roles,
+    };
+
+    nock(url)
+      .post('/api/Authorization/IsUserInRole', JSON.stringify(bodyUser))
+      .reply(401, invalidReply);
+
+    globalIdentity.checkRolePermission(userKey, roles).catch((err) => {
+      err.message.should.not.be.empty();
+      done();
+    });
+  });
+});
+
+describe('GlobalIdentity.canAccess', () => {
+  const invalidUserKey = 'INVALIDUSERKEY';
+  const invalidRole = ['ZEFERRADO'];
+  const userKey = 'USERKEYBOLADO';
+  const roles = ['ROLES_BOLADO'];
+  const next = sinon.spy();
+  let res;
+
+  beforeEach((done) => {
+    res = {
+      status: sinon.stub(),
+      json: sinon.stub(),
+    };
+
+    next.reset();
+
+    const bodyUser = {
+      ApplicationKey: apiKey,
+      UserKey: userKey,
+      RoleCollection: roles,
+    };
+
+    const bodyUserFail = {
+      ApplicationKey: apiKey,
+      UserKey: invalidUserKey,
+      RoleCollection: invalidRole,
+    };
+
+    nock(url)
+      .post('/api/Authorization/IsUserInRole', JSON.stringify(bodyUser))
+      .reply(200, checkRolePermissionReply);
+
+    nock(url)
+      .post('/api/Authorization/IsUserInRole', JSON.stringify(bodyUserFail))
+      .reply(200, invalidPermission);
+    done();
+  });
+
+  it('should return status code 401 without token', (done) => {
+    const req = { headers: [] };
+    res.status.withArgs(401).returns(res);
+
+    globalIdentity.canAccess(roles)(req, res, next);
+    res.status.calledWith(401).should.be.true();
+    done();
   });
 });
 

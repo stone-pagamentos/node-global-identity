@@ -155,9 +155,6 @@ function GlobalIdentity() {
           body: JSON.stringify(body),
           headers: _getHeaders()
         }).then(function (res) {
-          // const json = JSON.parse(res);
-          // delete json.OperationReport;
-          // return resolve(renameKeys(json));
           return _response(res, resolve, reject);
         })['catch'](function (err) {
           return _handleError(JSON.parse(err.error), reject);
@@ -165,8 +162,23 @@ function GlobalIdentity() {
       });
     },
 
-    isAuthenticated: function isAuthenticated() {
+    canAccess: function canAccess(roles) {
       var _this2 = this;
+
+      return function (req, res, next) {
+        if (!req.headers.userkey) {
+          return res.status(401).json({ error: { message: 'Invalid user key' } });
+        }
+        return _this2.checkRolePermission(req.headers.userkey, roles).then(function () {
+          return next();
+        })['catch'](function () {
+          return res.status(401).json({ error: { message: 'No permission' } });
+        });
+      };
+    },
+
+    isAuthenticated: function isAuthenticated() {
+      var _this3 = this;
 
       return function (req, res, next) {
         if (!req.headers.authorization) {
@@ -184,7 +196,7 @@ function GlobalIdentity() {
           return res.status(401).json({ error: { message: 'Invalid token' } });
         }
 
-        return _this2.validateToken(token).then(function (result) {
+        return _this3.validateToken(token).then(function (result) {
           req.user = Object.assign(result, { token: token });
           return next();
         })['catch'](function () {
