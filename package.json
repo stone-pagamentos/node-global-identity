@@ -1,6 +1,6 @@
 {
   "name": "node-global-identity",
-  "version": "0.0.13",
+  "version": "0.1.0",
   "description": "Global indentity library for node.js",
   "main": "index.js",
   "scripts": {
