@@ -34,6 +34,6 @@
     "depd": "^1.1.0",
     "lodash": "^3.10.1",
     "request-promise": "^1.0.1",
-    "string-helper": "^0.0.7"
+    "string-helper": "^0.0.8"
   }
 }
