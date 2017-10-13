@@ -1,5 +1,5 @@
 import { UserAuthenticationResponse } from "./interfaces"
-import gimConfiguration from "./config/global-identity-config"
+
 export  class Authorization {
     private base_url = ""
     constructor(private applicationKey: string){

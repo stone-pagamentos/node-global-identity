@@ -4,7 +4,9 @@
   "description": "Global indentity library for node.js",
   "main": "dist/index.js",
   "scripts": {
-    "test": "grunt test -v"
+    "build": "tsc",
+    "test-unit": "npm run build && ava --verbose 'tests/unit/**/*.js'",
+    "test": "npm run build && ava --verbose --serial 'tests/**/*.js'"
   },
   "repository": {
     "type": "git",
