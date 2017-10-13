@@ -2,7 +2,7 @@ import { getConfig } from './index'
 
 const gimConfiguration = getConfig({
     test: {
-        base_url: "https://private-anon-41d5c63929-globalidentity.apiary-mock.com/api/",
+        base_url: "https://private-anon-41d5c63929-globalidentity.apiary-mock.com/api",
         aplication_key: "test_api_key"
     },
     production: {
