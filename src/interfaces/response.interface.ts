@@ -1,25 +1,28 @@
-export interface RenewTokenResponse{
-  NewToken: string
-  ExpirationInMinutes: number
+export interface BasicReponse {
   Success: boolean
   OperationReport: [any]
 }
 
-export interface UserAuthenticationResponse{
+export interface RenewTokenResponse extends BasicReponse{
+  NewToken: string
+  ExpirationInMinutes: number
+}
+
+export interface UserAuthenticationResponse extends BasicReponse{
   AuthenticationToken: string
   TokenExpirationInMinutes: number
   UserKey: string
   Name: string
-  Success: boolean
 }
 
-export interface ValidateTokenResponse {
+export interface ValidateTokenResponse extends BasicReponse {
   ExpirationInMinutes: number
-  Success: boolean
-  OperationReport: [any]
 }
 
-export interface BasicReponse {
-  Success: boolean
-  OperationReport: [any]
+export interface UserRolesReponse extends BasicReponse {
+  roles: [any]
+}
+
+export interface AddUser extends BasicReponse {
+  userKey: string
 }
