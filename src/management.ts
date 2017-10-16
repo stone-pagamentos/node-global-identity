@@ -1,4 +1,4 @@
-import { 
+import {
   UserRolesReponse,
   BasicReponse
 } from './interfaces/response.interface'
@@ -8,10 +8,10 @@ export class Management{
   request: any
 
   constructor (private applicationKey: string, apiKey: string, private baseURL: string) {
-    this.baseURL = `/management/${applicationKey}`
+    this.baseURL = `${this.baseURL}/management/${applicationKey}`
     this.request = axios.create({
-      baseURL: `${baseURL}`,
-      timeout: 3000,
+      baseURL: `${this.baseURL}`,
+      timeout: 5000,
       headers: { Authorization: `bearer ${apiKey}` }
     })
   }
@@ -21,7 +21,7 @@ export class Management{
    * @param email user email to be authenticated
    */
   public getUserRoles (email: string): Promise<UserRolesReponse> {
-    const endpoint = `/user/${email}/roles`
+    const endpoint = `/users/${email}/roles`
 
     return this.request.get(endpoint)
       .then((result: any) => {
@@ -37,9 +37,9 @@ export class Management{
   public associateRolesToUser (email: string, roles: string[]): Promise<BasicReponse> {
     if (!(roles && roles.length)) {
       return Promise.reject(new Error('You must provide roles'))
-    }    
-    
-    const endpoint = `/user/${email}/roles`
+    }
+
+    const endpoint = `/users/${email}/roles`
     const body = { roles }
 
     return this.request.post(endpoint, body)
@@ -63,7 +63,7 @@ export class Management{
     const body = {
       fullName,
       password,
-      comment: comment || '' 
+      comment: comment || ''
     }
 
     return this.request.post(endpoint, body)

@@ -23,6 +23,6 @@ export = function GlobalIdentity (baseURL:string, aplicationKey: string, apiKeyC
 
   return {
     Authorization: new Authorization(appKey, baseurl),
-    Management: new Management(appKey, baseurl, apiKey)
+    Management: new Management(appKey, apiKey, baseurl)
   }
 }

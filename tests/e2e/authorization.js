@@ -14,8 +14,8 @@ const userData = {
 
 test('Authorization: authenticate user', async t => {
 
-  const response = await autorization.authenticateUser(userData.email, userData.password)
-  t.is(response.Success, true)
+  const response = await autorization.authenticateUser(userData.email, userData.password, userData.TokenExpirationInMinutes)
+  t.true(response.Success)
   t.is(response.TokenExpirationInMinutes, userData.TokenExpirationInMinutes)
   t.not(response.AuthenticationToken, undefined)
 
@@ -23,22 +23,20 @@ test('Authorization: authenticate user', async t => {
 
 test('Authorization: validates token', async t => {
 
-  const { AuthenticationToken } = await autorization.authenticateUser(userData.email, userData.password)
+  const { AuthenticationToken } = await autorization.authenticateUser(userData.email, userData.password, userData.TokenExpirationInMinutes)
   const response = await autorization.validateToken(AuthenticationToken)
 
-  t.is(response.ExpirationInMinutes, userData.TokenExpirationInMinutes)
-  t.is(response.Success, true)
+  t.true(response.Success)
 
 }, 'should validate token')
 
 test('Authorization: renews token', async t => {
 
-  const { AuthenticationToken } = await autorization.authenticateUser(userData.email, userData.password)
-  const response = await autorization.renewToken(AuthenticationToken, 5 )
+  const { AuthenticationToken } = await autorization.authenticateUser(userData.email, userData.password, userData.TokenExpirationInMinutes)
+  const response = await autorization.renewToken(AuthenticationToken, userData.TokenExpirationInMinutes)
 
   t.not(response.NewToken, undefined)
-  t.is(response.ExpirationInMinutes, 5)
-  t.is(response.Success, true)
+  t.true(response.Success)
 
 }, 'should renew token')
 
@@ -46,13 +44,13 @@ test('Authorization: renews token', async t => {
 test('Authorization: verifies roles in user', async t => {
 
   const response = await autorization.isUserInRole(userData.UserKey, userData.roles)
-  t.is(response.Success, true)
+  t.true(response.Success)
 
 }, 'should verifies roles of a specific user')
 
-test('Authorization: recovers password', async t => {
+// test('Authorization: recovers password', async t => {
 
-  const response = await autorization.recoverPassword(userData.email);
-  t.is(response.Success, true)
+//   const response = await autorization.recoverPassword(userData.email);
+//   t.true(response.Success)
 
-}, 'should recover password')
+// }, 'should recover password')
