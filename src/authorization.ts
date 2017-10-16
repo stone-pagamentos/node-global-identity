@@ -2,7 +2,7 @@ import {
   RenewTokenResponse,
   UserAuthenticationResponse,
   ValidateTokenResponse,
-  BasicReponse,
+  BasicReponse
 } from './interfaces/response.interface'
 import axios from 'axios'
 
@@ -30,7 +30,7 @@ export  class Authorization {
       Email: email,
       Password: password,
       ApplicationKey: this.applicationKey,
-      TokenExpirationInMinutes: tokenExpirationTime,
+      TokenExpirationInMinutes: tokenExpirationTime
     }
 
     return axios
@@ -49,7 +49,7 @@ export  class Authorization {
     const endpoint = '/validateToken'
     const body = {
       ApplicationKey: this.applicationKey,
-      Token: token,
+      Token: token
     }
 
     return axios
@@ -67,7 +67,7 @@ export  class Authorization {
     const endpoint = '/renewToken'
     const body: any = {
       ApplicationKey: this.applicationKey,
-      Token: oldToken,
+      Token: oldToken
     }
 
     if (tokenExpirationTime) {
@@ -94,7 +94,7 @@ export  class Authorization {
     const body = {
       ApplicationKey: this.applicationKey,
       UserKey: userKey,
-      RoleCollection: roles,
+      RoleCollection: roles
     }
 
     return axios
@@ -110,7 +110,7 @@ export  class Authorization {
     const endpoint = '/recoverPassword'
     const body = {
       ApplicationKey: this.applicationKey,
-      Email: email,
+      Email: email
     }
 
     return axios

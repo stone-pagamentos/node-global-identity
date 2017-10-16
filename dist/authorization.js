@@ -22,7 +22,7 @@ var Authorization = /** @class */ (function () {
             Email: email,
             Password: password,
             ApplicationKey: this.applicationKey,
-            TokenExpirationInMinutes: tokenExpirationTime,
+            TokenExpirationInMinutes: tokenExpirationTime
         };
         return axios_1.default
             .post(this.getURL(endpoint), body)
@@ -39,7 +39,7 @@ var Authorization = /** @class */ (function () {
         var endpoint = '/validateToken';
         var body = {
             ApplicationKey: this.applicationKey,
-            Token: token,
+            Token: token
         };
         return axios_1.default
             .post(this.getURL(endpoint), body)
@@ -55,7 +55,7 @@ var Authorization = /** @class */ (function () {
         var endpoint = '/renewToken';
         var body = {
             ApplicationKey: this.applicationKey,
-            Token: oldToken,
+            Token: oldToken
         };
         if (tokenExpirationTime) {
             body.TokenExpirationInMinutes = tokenExpirationTime;
@@ -77,7 +77,7 @@ var Authorization = /** @class */ (function () {
         var body = {
             ApplicationKey: this.applicationKey,
             UserKey: userKey,
-            RoleCollection: roles,
+            RoleCollection: roles
         };
         return axios_1.default
             .post(this.getURL(endpoint), body)
@@ -91,7 +91,7 @@ var Authorization = /** @class */ (function () {
         var endpoint = '/recoverPassword';
         var body = {
             ApplicationKey: this.applicationKey,
-            Email: email,
+            Email: email
         };
         return axios_1.default
             .post(this.getURL(endpoint), body)
