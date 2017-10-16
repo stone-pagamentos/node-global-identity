@@ -6,6 +6,7 @@
   "scripts": {
     "build": "tsc",
     "test-unit": "npm run build && ava --verbose 'tests/unit/**/*.js'",
+    "test-e2e": "npm run build && ava --verbose 'tests/e2e/**/*.js'",
     "test": "npm run build && ava --verbose --serial 'tests/**/*.js'"
   },
   "repository": {

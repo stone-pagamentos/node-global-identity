@@ -5,23 +5,28 @@ import {
 import axios from 'axios'
 
 export class Management{
+  request: any
+
   constructor (private applicationKey: string, apiKey: string, private baseURL: string) {
     this.baseURL = `/management/${applicationKey}`
-  }
-
-  private getURL (endpoint: string): string {
-    return this.baseURL + endpoint
+    this.request = axios.create({
+      baseURL: `${baseURL}`,
+      timeout: 3000,
+      headers: { Authorization: `bearer ${apiKey}` }
+    })
   }
 
   /**
    * List all the roles that are associated with a specific user.
    * @param email user email to be authenticated
    */
-  public getUserRoles(email: string): Promise<UserRolesReponse>{
+  public getUserRoles (email: string): Promise<UserRolesReponse> {
     const endpoint = `/user/${email}/roles`
 
-    return axios.get(this.getURL(endpoint))
-      .then(result => result.data)
+    return this.request.get(endpoint)
+      .then((result: any) => {
+        return result.data
+      })
   }
 
   /**
@@ -29,7 +34,7 @@ export class Management{
    * @param email user email to be authenticated
    * @param roles array to associate to user
    */
-  public associateRolesToUser(email: string, roles: Array<string>): Promise<BasicReponse>{
+  public associateRolesToUser (email: string, roles: string[]): Promise<BasicReponse> {
     if (!(roles && roles.length)) {
       return Promise.reject(new Error('You must provide roles'))
     }    
@@ -37,8 +42,10 @@ export class Management{
     const endpoint = `/user/${email}/roles`
     const body = { roles }
 
-    return axios.post(this.getURL(endpoint), body)
-      .then(result => result.data)
+    return this.request.post(endpoint, body)
+      .then((result: any) => {
+        return result.data
+      })
   }
 
   /**
@@ -46,7 +53,12 @@ export class Management{
    * @param email user email to be authenticated
    * @param roles array to associate to user
    */
-  public addUser(email: string, fullName: string, password: string, comment?:string): Promise<BasicReponse>{
+  public addUser (
+    email: string,
+    fullName: string,
+    password: string,
+    comment?:string):
+    Promise<BasicReponse> {
     const endpoint = `/user/${email}`
     const body = {
       fullName,
@@ -54,7 +66,9 @@ export class Management{
       comment: comment || '' 
     }
 
-    return axios.post(this.getURL(endpoint), body)
-      .then(result => result.data)
+    return this.request.post(endpoint, body)
+      .then((result: any) => {
+        return result.data
+      })
   }
 }

@@ -3,11 +3,11 @@ import { GlobalIdentityConfig } from './interfaces/config.interface'
 import { Authorization } from './authorization'
 import * as gimConfiguration from './config/global-identity-config'
 
-export = function GlobalIdentity (aplicationKey: string, ApplicationProgrammingInterface: string) {
+export = function GlobalIdentity (base_url:string, aplicationKey: string, apiKeyConfig: string) {
   const gimConfig: GlobalIdentityConfig = <GlobalIdentityConfig>gimConfiguration()
   const appKey = aplicationKey || gimConfig.aplication_key
-  const apiKey = ApplicationProgrammingInterface || gimConfig.api_key
-  const baseUrl = gimConfig.aplication_key
+  const apiKey = apiKeyConfig || gimConfig.api_key
+  const baseUrl = gimConfig.base_url
 
   if (!appKey) {
     throw new Error('You must provide an application key')
