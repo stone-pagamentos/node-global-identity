@@ -7,7 +7,7 @@ export = function GlobalIdentity (base_url:string, aplicationKey: string, apiKey
   const gimConfig: GlobalIdentityConfig = <GlobalIdentityConfig>gimConfiguration()
   const appKey = aplicationKey || gimConfig.aplication_key
   const apiKey = apiKeyConfig || gimConfig.api_key
-  const baseUrl = gimConfig.base_url
+  const baseUrl = base_url || gimConfig.base_url
 
   if (!appKey) {
     throw new Error('You must provide an application key')
