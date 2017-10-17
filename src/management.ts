@@ -48,21 +48,22 @@ export class Management{
       })
   }
 
+
+
   /**
-   * Associates a user to your application.
-   * @param email user email to be authenticated
-   * @param roles array to associate to user
+   * Creates a membership between the user and the application
+   * @param email Email of the user to be associated
+   * @param fullName Name of the user to be associated
+   * @param comment Any comment about the user in your application
    */
   public addUser (
     email: string,
     fullName: string,
-    password: string,
     comment?:string):
     Promise<BasicReponse> {
-    const endpoint = `/user/${email}`
+    const endpoint = `/users/${email}`
     const body = {
       fullName,
-      password,
       comment: comment || ''
     }
 
@@ -70,5 +71,17 @@ export class Management{
       .then((result: any) => {
         return result.data
       })
+  }
+
+  public deleteUser (email: string) {
+    const endpoint = `/users/${email}`
+    return this.request.delete(endpoint)
+      .then((result:any) => result.data)
+  }
+
+  public dissociateUserFromRole (email: string, roleName: string) {
+    const endpoint = `/users/${email}/roles/${roleName}`
+    return this.request.delete(endpoint)
+      .then((result:any) => result.data)
   }
 }

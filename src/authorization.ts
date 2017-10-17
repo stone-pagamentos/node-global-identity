@@ -84,7 +84,7 @@ export  class Authorization {
    * @param userKey Unique global key identifying the user to be checked
    * @param roles array of roles to check
    */
-  public isUserInRole (userKey:string, roles: [string]): Promise<BasicReponse> {
+  public isUserInRoles (userKey:string, roles: [string]): Promise<BasicReponse> {
     const endpoint = '/isUserInRole'
 
     if (!roles || roles.length < 1) {

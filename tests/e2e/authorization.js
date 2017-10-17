@@ -1,8 +1,9 @@
 import globalIdentity from '../../dist'
 import test from 'ava'
 
-const gim = globalIdentity();
-let autorization = gim.Authorization;
+const gim = globalIdentity()
+const autorization = gim.Authorization
+const management = gim.Management
 
 const userData = {
   email: 'vitor.lima@pagar.me',
@@ -43,7 +44,8 @@ test('Authorization: renews token', async t => {
 
 test('Authorization: verifies roles in user', async t => {
 
-  const response = await autorization.isUserInRole(userData.UserKey, userData.roles)
+  const addRole = await management.associateRolesToUser(userData.email, userData.roles)
+  const response = await autorization.isUserInRoles(userData.UserKey, userData.roles)
   t.true(response.Success)
 
 }, 'should verifies roles of a specific user')

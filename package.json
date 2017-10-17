@@ -1,13 +1,15 @@
 {
   "name": "node-global-identity",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "Global indentity library for node.js",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "test-unit": "npm run build && ava --verbose 'tests/unit/**/*.js'",
     "test-e2e": "npm run build && ava --verbose 'tests/e2e/**/*.js'",
-    "test": "npm run build && ava --verbose --serial 'tests/**/*.js'"
+    "test": "npm run build && ava --verbose --serial 'tests/**/*.js'",
+    "eslint": "eslint 'test/**/*.js'",
+    "tslint": "tslint 'src/**/*.ts'"
   },
   "repository": {
     "type": "git",

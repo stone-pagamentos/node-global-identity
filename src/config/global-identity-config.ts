@@ -2,14 +2,14 @@ import { getConfig } from './index'
 
 const gimConfiguration = getConfig({
   test: {
-    base_url: 'https://arpexid.stone.com.br/api',
-    aplication_key: process.env.GLOBAL_APP_KEY_TEST || 'test_aplication_key',
-    api_key: process.env.GLOBAL_API_KEY_TEST || 'test_api_key'
+    baseURL: 'https://arpexid.stone.com.br/api',
+    applicationKey: process.env.GLOBAL_APP_KEY || 'test_aplication_key',
+    apiKey: process.env.GLOBAL_API_KEY || 'test_api_key'
   },
   production: {
-    base_url: process.env.GLOBAL_IDENTITY_URL || 'https://arpexid.stone.com.br/api',
-    aplication_key: process.env.GLOBAL_APP_KEY,
-    api_key: process.env.GLOBAL_API_KEY
+    baseURL: process.env.GLOBAL_IDENTITY_URL || 'https://arpexid.stone.com.br/api',
+    applicationKey: process.env.GLOBAL_APP_KEY,
+    apiKey: process.env.GLOBAL_API_KEY
   }
 })
 
