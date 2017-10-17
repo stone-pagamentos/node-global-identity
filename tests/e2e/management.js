@@ -31,4 +31,11 @@ test('Management: dissassociate a role of a user', async t => {
       const response = await management.dissociateUserFromRole(userData.email, userData.roleName)
       t.true(response.Success)
 
-  }, 'should dissassociate a specific role of a user')
+}, 'should dissassociate a specific role of a user')
+
+test('Management: activates a user', async t => {
+
+        const response = await management.activateUser(userData.email);
+        t.true(response.Success)
+
+}, 'should activate a specific user')

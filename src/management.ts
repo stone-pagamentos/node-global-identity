@@ -67,21 +67,49 @@ export class Management{
       comment: comment || ''
     }
 
-    return this.request.post(endpoint, body)
+    return this.request.put(endpoint, body)
       .then((result: any) => {
         return result.data
       })
   }
 
-  public deleteUser (email: string) {
+  public deleteUser (email: string) : Promise<BasicReponse> {
     const endpoint = `/users/${email}`
     return this.request.delete(endpoint)
       .then((result:any) => result.data)
   }
 
-  public dissociateUserFromRole (email: string, roleName: string) {
+  public dissociateUserFromRole (email: string, roleName: string) : Promise<BasicReponse> {
     const endpoint = `/users/${email}/roles/${roleName}`
     return this.request.delete(endpoint)
+      .then((result:any) => result.data)
+  }
+
+  public  activateUser (email:string): Promise<BasicReponse> {
+    const endpoint = `/users/${email}`
+    const body = {
+      patches:[{
+        op: 'replace',
+        path: '/active',
+        value: true
+      }]
+    }
+
+    return this.request.patch(endpoint, body)
+      .then((result:any) => result.data)
+  }
+
+  public  deactivateUser (email:string): Promise<BasicReponse> {
+    const endpoint = `/users/${email}`
+    const body = {
+      patches:[{
+        op: 'replace',
+        path: '/active',
+        value: false
+      }]
+    }
+
+    return this.request.patch(endpoint, body)
       .then((result:any) => result.data)
   }
 }
