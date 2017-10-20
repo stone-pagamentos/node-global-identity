@@ -1,11 +1,11 @@
 language: node_js
 node_js:
-  - '5.0'
-  - '6'
+- '5.0'
+- '6'
 before_install:
-  - npm install
+- npm install
 after_success:
-  - npm run test
+- npm run test
 deploy:
   provider: npm
   email: mguilarducci@gmail.com
@@ -14,3 +14,7 @@ deploy:
   on:
     tags: true
     repo: stone-pagamentos/node-global-identity
+env:
+  global:
+  - secure: XS5z/D7T33X+CwzLzsGMGT25ItZVyfoKTjn9dFRKnxSGgJuws57pF6nkkiqngBgKx7UxZIm56u/MJ/aL3UsLQDZfCJP4fGYsJonVxMoZ+08r/tlJ+lqUAeP5iEIfteo1XPS8PHSx5RfzU3j/WA3Qq45dZuRtOXAuu9cYpndgE+WNxEDFDHNiuxrcCbxPn3q4/4eBiZY7LDGJi2idnkNnp+XU0fEj/ufGYnheQ5sTdxhDvlHHNfe49m6WCUBp7Rq85jYnifipxY/gTv8WJtK6X7G/1le3S9Np1MeTfgeWvmSfYSMWisoGdiFJGBlizcPB20K8Ge6anma3U21n+mhsiOSIdwRa16Y3dS2crk05FgsdFaDplflHdm7hEmipKE40Htxg3u/f3bVfXQ2r4xsflyHDHtiZCbfHiqLg2JcHYgyuy+jH/cXDtC2OFOd1aWcL5E2N/VS2jKvltfmq4A7exeR+R3CEq61+L+l7fPi42xjm80T0RAqCB40aRKsUj89N78Vc+fQqUxGdL2uds4x01P1GOnbbZtH0g2EPzdaHlC5BcxTS/54YYSPHc/57GapoGPitoRlXK6j9PyTWVPdb1lOdknx5dR2gyJ4Okr+rqPW9Ig1VUOou1lunl2fhXFH8ngWhhw6nRSHPApqUYowlR/3krP2zpEYFBKc4z9sRs78=
+  - secure: tAveBh7YrfTWtriMm8h/7M2yNYtRX1JRO3+mRLc4RywHVqdPv9iVJeHDqwJI4fQNOok6AHqr96nbuLcKbM0M3eeNcs6IMaZpYQ8eK3Ogz2fFD9nYVK57NeSsuuC2dxD2BIOlU+sqeuDsJt3SJojNMkxlWUInw89NdkW6gcwuom/xP19wQWOyQx50UCOOjaQGToZ48k6Yrkwff+IqfcQkS++GmrjiDz3uRpBcQ8RJyxynWXEJ3N9Bv0fOM/I4qyccLrLH9f9NaBad0gCl2a7hHFRNFqU49lUz5SH2CuVSewcg46szjw6U4BAWtrE4VjnFGaI9jDsZ+sjtppp7H/GA6n4HLJy9EMNs0YSj+aHFv9LD6X7abWu+IlbWS89GSekYWRJwEu3hJaTwdjboXyP2fe26KNKUAahnV1wMUnx+R/wnpUBMXKSYrrP8zvHPurMQmtgOtgxjYQL4BWVEmfKpXPRyiTVEFDppD9iH/KF8PPEaFyQsRK3enANejhKWjVxZXs4OvunE7+Ho9SEnT+h6Cv/38Wi2oHc9USIizYGu7jGk0PjDgC8x47WblI6vqdpsGH/7ekw7SpjA96Qbi65HUCd4gKYnqHVWG5TlYQsJ9sybzN5X69nY44X3xbYZ1Yh1DIlQAK6OMXBwjtaCd6Gt4obSTtPDeOlmzGc/i9XfMls=
