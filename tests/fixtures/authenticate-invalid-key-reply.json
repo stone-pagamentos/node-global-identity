@@ -1,9 +1,0 @@
-{
-  "Success": false,
-  "OperationReport": [
-    {
-      "Field": "AuthenticateRequest.ApplicationKey",
-      "Message": "AuthenticateRequest.ApplicationKey: Application not found."
-    }
-  ]
-}

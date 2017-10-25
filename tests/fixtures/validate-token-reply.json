@@ -1,8 +1,0 @@
-{
-  "ExpirationInMinutes": 60,
-  "Success": true,
-  "Email": "user@email.com.br",
-  "Name": "User Name",
-  "SourceApplication": "Source Application",
-  "OperationReport": []
-}
