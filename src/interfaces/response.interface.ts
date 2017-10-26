@@ -26,3 +26,17 @@ export interface UserRolesReponse extends BasicReponse {
 export interface AddUser extends BasicReponse {
   userKey: string
 }
+
+export interface GetUserResponse{
+  user: {
+    userKey:string
+    email: string
+    name: string,
+    comment: string
+    active: boolean
+    lockedOut: false
+    roles: [string]
+  },
+  Success: boolean,
+  OperationReport: [string]
+}
