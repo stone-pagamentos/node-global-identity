@@ -39,3 +39,12 @@ test('Management: activates a user', async t => {
         t.true(response.Success)
 
 }, 'should activate a specific user')
+
+test('Management: gets User', async t => {
+
+          const response = await management.getUser(userData.email);
+          t.true(response.hasOwnProperty("user"))
+          t.true(response.user.hasOwnProperty("roles"))
+          t.true(response.Success)
+
+}, 'should get users detail')

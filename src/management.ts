@@ -1,6 +1,7 @@
 import {
   UserRolesReponse,
-  BasicReponse
+  BasicReponse,
+  GetUserResponse
 } from './interfaces/response.interface'
 import axios from 'axios'
 
@@ -111,5 +112,12 @@ export class Management{
 
     return this.request.patch(endpoint, body)
       .then((result:any) => result.data)
+  }
+
+  getUser (email:string): Promise<GetUserResponse> {
+    const endpoint = `/users/${email}?includeRoles=true`
+
+    return this.request.get(endpoint)
+    .then((result:any) => result.data)
   }
 }
