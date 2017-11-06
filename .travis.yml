@@ -1,7 +1,10 @@
 language: node_js
 node_js:
-- '5.0'
+- '4.2'
 - '6'
+- '6.2.1'
+- '6.11'
+- 'lts/*'
 before_install:
 - npm install
 after_success:
