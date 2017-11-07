@@ -11,6 +11,10 @@
     "eslint": "eslint 'test/**/*.js'",
     "tslint": "tslint 'src/**/*.ts'"
   },
+  "engines" : {
+    "node": ">=4.2.0",
+    "npm": ">=3.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "git@github.com:stone-pagamentos/node-global-identity.git"
