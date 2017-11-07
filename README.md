@@ -11,6 +11,7 @@ npm install node-global-identity
 
 # Usage
 
+## Instantiating With Params
 ```js
 import GlobalIdentity from 'node-global-identity';
 
@@ -19,8 +20,20 @@ const gim = new GlobalIdentity({
   apiKey: 'YOUR-API-KEY',
   baseURL: 'GLOBAL-IDENTITY-URL',
 });
-
 ```
+
+## or Setting Env Variables
+```
+export GLOBAL_APP_KEY=""
+export GLOBAL_API_KEY=""
+```
+
+```js
+import GlobalIdentity from 'node-global-identity';
+
+const gim = new GlobalIdentity();
+```
+
 
 ## Authorization 
 
@@ -36,6 +49,7 @@ const gim = new GlobalIdentity({
 
 ```ts
 * gim.Management.addUser (email: string, fullName: string, comment?:string): Promise
+* gim.Management.getUser (email: string)
 * gim.Management.deleteUser (email: string)
 * gim.Management.getUserRoles (email: string): Promise
 * gim.Management.associateRolesToUser (email: string, roles: string[]): Promise
@@ -43,5 +57,3 @@ const gim = new GlobalIdentity({
 ```
 
 ### [Global Identity API Documentation](http://docs.globalidentity.apiary.io)
-
-
