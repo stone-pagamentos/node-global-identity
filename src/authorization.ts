@@ -117,4 +117,29 @@ export  class Authorization {
       .post(this.getURL(endpoint), body)
       .then(result => result.data)
   }
+
+  /**
+   * Validates a given Client Application Key
+   * @param ClientApplicationKey Key that identifies an application
+   * @param rawData random string
+   * @param encryptedData random string encrypted using HMAC SHA256 protocol 
+   */
+  public validateApplication (
+    ClientApplicationKey : string,
+    RawData: string,
+    EncryptedData: string
+  ) {
+    const endpoint = '/validateapplication'
+    const body = {
+      ClientApplicationKey,
+      RawData,
+      EncryptedData,
+      ApplicationKey: this.applicationKey
+    }
+
+    return axios
+      .post(this.getURL(endpoint), body)
+      .then(result => result.data)
+      .catch(error => error.response.data)
+  }
 }
