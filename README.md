@@ -35,6 +35,18 @@ const gim = new GlobalIdentity();
 ```
 
 
+## Application Authorization
+
+If you want to validate an application, you must encrypt a random string with the Client Application Secret Key.
+
+```js
+gim.Authorization.validateApplication(
+  ClientApplicationKey,
+  RandomString,
+  RandomEncryptedString
+)
+```
+
 ## Authorization 
 
 ```ts
@@ -43,6 +55,7 @@ const gim = new GlobalIdentity();
 * gim.Authorization.renewToken (oldToken: string): Promise
 * gim.Authorization.isUserInRoles (userKey:string, roles: [string]): Promise
 * gim.Authorization.recoverPassword (email:string): Promise
+* gim.Authorization.validateApplication (clientApplicationKey:string, rawData:string, encryptedData: string): Promise
 ```
 
 ## Management
@@ -56,4 +69,4 @@ const gim = new GlobalIdentity();
 * gim.Management.dissociateUserFromRole (email: string, roleName: string): Promise
 ```
 
-### [Global Identity API Documentation](http://docs.globalidentity.apiary.io)
+### [Global Identity API Documentation](https://gim.readme.io/v2.0/reference#bem-vindo-1)
