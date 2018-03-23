@@ -2,7 +2,8 @@ import {
   RenewTokenResponse,
   UserAuthenticationResponse,
   ValidateTokenResponse,
-  BasicReponse
+  BasicReponse,
+  ValidateClientAPIResponse
 } from './interfaces/response.interface'
 import axios from 'axios'
 
@@ -128,7 +129,7 @@ export  class Authorization {
     ClientApplicationKey : string,
     RawData: string,
     EncryptedData: string
-  ) {
+  ) : Promise<ValidateClientAPIResponse> {
     const endpoint = '/validateapplication'
     const body = {
       ClientApplicationKey,
@@ -140,6 +141,6 @@ export  class Authorization {
     return axios
       .post(this.getURL(endpoint), body)
       .then(result => result.data)
-      .catch(error => error.response.data)
+      .catch(error => error)
   }
 }

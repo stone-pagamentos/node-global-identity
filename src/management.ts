@@ -1,7 +1,8 @@
 import {
   UserRolesReponse,
   BasicReponse,
-  GetUserResponse
+  GetUserResponse,
+  AppRolesReponse
 } from './interfaces/response.interface'
 import axios from 'axios'
 
@@ -119,5 +120,14 @@ export class Management{
 
     return this.request.get(endpoint)
     .then((result:any) => result.data)
+  }
+
+  public getAppRoles (): Promise<AppRolesReponse>{
+    const endpoint =`/clientApplications/roles`
+    
+    return this.request.get(endpoint)
+    .then((result: any) => {
+      return result.data
+    })
   }
 }
