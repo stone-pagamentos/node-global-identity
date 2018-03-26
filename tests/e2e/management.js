@@ -48,3 +48,14 @@ test('Management: gets User', async t => {
           t.true(response.Success)
 
 }, 'should get users detail')
+
+test('Management: gets App Roles', async t => {
+
+      const response = await management.getAppRoles();
+      t.true(response.hasOwnProperty("InternalExecutionTime"))
+      t.true(response.hasOwnProperty("ExternalExecutionTime"))
+      t.true(response.hasOwnProperty("TotalExecutionTime"))
+      t.true(response.hasOwnProperty("RequestKey"))
+      t.true(response.hasOwnProperty("Roles"))
+      t.true(Array.isArray(response.Roles))
+}, 'should get app roles')
