@@ -23,6 +23,22 @@ export interface UserRolesReponse extends BasicReponse {
   roles: [any]
 }
 
+export interface AppRolesReponse extends BasicReponse {
+  roles: 
+  [
+    {
+      roleName:string,
+      description:string,
+      active:string
+    }
+  ],
+  InternalExecutionTime : number
+  ExternalExecutionTime : number
+  TotalExecutionTime : number
+  RequestKey : string
+
+}
+
 export interface AddUser extends BasicReponse {
   userKey: string
 }
@@ -39,4 +55,11 @@ export interface GetUserResponse{
   },
   Success: boolean,
   OperationReport: [string]
+}
+
+export interface ValidateClientAPIResponse extends BasicReponse {
+  roles:[any];
+  InternalExecutionTime: number,
+  ExternalExecutionTime: number,
+  TotalExecutionTime: number
 }
